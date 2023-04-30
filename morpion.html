@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>morpion totalitaire</title>
+    <style>
+      .text {
+        color: darkred;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      td {
+        width: 50px;
+        height: 50px;
+        border: 2px solid gold;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 36px;
+        font-weight: bold;
+        cursor: pointer;
+		background-color:red;
+      }
+	  body {
+	  background-color:black;
+	  }
+    </style>
+  </head>
+  <body>
+    <h1 class="text">morpion totalitaire</h1>
+    <table>
+      <tr>
+        <td id="cell00"></td>
+        <td id="cell01"></td>
+        <td id="cell02"></td>
+      </tr>
+      <tr>
+        <td id="cell10"></td>
+        <td id="cell11"></td>
+        <td id="cell12"></td>
+      </tr>
+      <tr>
+        <td id="cell20"></td>
+        <td id="cell21"></td>
+        <td id="cell22"></td>
+      </tr>
+    </table>
+    <script>
+	  var player = '卍';
+      var cells = document.querySelectorAll('td');
+      for (var i = 0; i < cells.length; i++) {
+        cells[i].addEventListener('click', function() {
+          if (this.innerHTML === '') {
+            this.innerHTML = player;
+            if (checkWin()) {
+              alert('Le regime' + player + ' a gagné !');
+              resetBoard();
+            } else if (checkDraw()) {
+              alert('tout les deux nul');
+              resetBoard();
+            } else {
+              player = (player === '卍') ? '☭' : '卍';
+            }
+          }
+        });
+      }
+      function checkWin() {
+        return checkLine(0, 1, 2) || checkLine(3, 4, 5) || checkLine(6, 7, 8) ||
+          checkLine(0, 3, 6) || checkLine(1, 4, 7) || checkLine(2, 5, 8) ||
+          checkLine(0, 4, 8) || checkLine(2, 4, 6);
+      }
+      function checkLine(a, b, c) {
+        return cells[a].innerHTML !== '' && cells[a].innerHTML === cells[b].innerHTML && cells[b].innerHTML === cells[c].innerHTML;
+      }
+      function checkDraw() {
+        for (var i = 0; i < cells.length; i++) {
+          if (cells[i].innerHTML === '') {
+            return false;
+          }
+        }
+        return true;
+      }
+      function resetBoard() {
+        for (var i = 0; i < cells.length; i++) {
+          cells[i].innerHTML = '';
+        }
+        player = '卍';
+      }
+    </script>
+  </body>
+</html>
